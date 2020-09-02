@@ -12,16 +12,16 @@ namespace WebApi.Controllers
     {
         [HttpGet]
         [Route("Hi")]
-        public string Hi()
+        public object Hi()
         {
-            return $"Hi {DateTime.Now}";
+            return new { Hi = $"Hi unsecured {DateTime.Now}" };
         }
 
         [HttpGet]
         [Route("HiSecure")]
-        public string HiSecure()
+        public object HiSecure()
         {
-            return $"Hi secure {DateTime.Now}";
+            return new { Hi = $"Hi secured {DateTime.Now}" };
         }
     }
 }
