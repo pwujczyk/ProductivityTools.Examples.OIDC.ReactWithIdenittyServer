@@ -1,9 +1,10 @@
 import React from 'react';
+import {signinRedirect} from '../services/userService'
 
 function Login() {
 
     function login(){
-        
+        signinRedirect();
     }
 
     return (
