@@ -11,6 +11,8 @@ namespace IdentityServer
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public IWebHostEnvironment Environment { get; }
 
         public Startup(IWebHostEnvironment environment)
@@ -30,6 +32,15 @@ namespace IdentityServer
 
             // not recommended for production - you need to store your key material somewhere secure
             builder.AddDeveloperSigningCredential();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(MyAllowSpecificOrigins,
+                builder =>
+                {
+                    builder.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader();
+                });
+            });
         }
 
         public void Configure(IApplicationBuilder app)
@@ -39,8 +50,7 @@ namespace IdentityServer
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors(configure => configure.AllowAnyOrigin().AllowAnyMethod());
-
+            app.UseCors(MyAllowSpecificOrigins);
             // uncomment if you want to add MVC
             app.UseStaticFiles();
             app.UseRouting();

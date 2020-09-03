@@ -1,17 +1,34 @@
-import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import SigninOidc from './pages/signin-oidc'
 import Home from './pages/home'
 import Login from './pages/login'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { Provider } from 'react-redux';
+import store from './store';
+import userManager, { loadUserFromStorage } from './services/userService'
+import AuthProvider from './utils/authProvider'
 import PrivateRoute from './utils/privateroute'
 
 function App() {
+
+
+  useEffect(() => {
+    // fetch current user from cookies
+    loadUserFromStorage(store)
+  }, [])
+
   return (
-    <Router>
-      <Route path="/signin-oidc" component={Home} />
-      <Route path="/login" component={Login} />
-      <PrivateRoute exact path="/" component={Home} />
-    </Router>
+    <Provider store={store}>
+      <AuthProvider userManager={userManager} store={store}>
+        <Router>
+          <Switch>
+            <Route path="/signin-oidc" component={SigninOidc} />
+            <Route path="/login" component={Login} />
+            <PrivateRoute exact path="/" component={Home} />
+          </Switch>
+        </Router>
+      </AuthProvider>
+    </Provider>
   );
 }
 

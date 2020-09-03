@@ -31,12 +31,14 @@ namespace IdentityServer
                 {
                     ClientId="reactapp",
                     ClientSecrets={new Secret("secret".Sha256()) },
+                    ClientUri = "http://localhost:3000",
                     AllowedGrantTypes=GrantTypes.Implicit,
+
+                    RequireClientSecret = false,
+
                     RedirectUris= { "http://localhost:3000/signin-oidc" },
-                       // where to redirect to after logout
                     PostLogoutRedirectUris = { "https://localhost:5002/signout-callback-oidc" },
-
-
+                    AllowedCorsOrigins = { "http://localhost:3000" },
 
                     AllowedScopes = new List<string>
                     {
