@@ -8,7 +8,8 @@ import PrivateRoute from './utils/privateroute'
 function App() {
   return (
     <Router>
-      <Route path="/login" component={Login}></Route>
+      <Route path="/signin-oidc" component={Home} />
+      <Route path="/login" component={Login} />
       <PrivateRoute exact path="/" component={Home} />
     </Router>
   );
