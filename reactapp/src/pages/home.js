@@ -13,7 +13,7 @@ function Home() {
   {
     
       let x=user;
-      debugger;
+debugger;
     fetch(`https://localhost:44307/Test/Hi`, {
       mode: 'cors',
       crossDomain: true,  
@@ -25,7 +25,10 @@ function Home() {
     fetch(`https://localhost:44307/Test/HiSecure`, {
       mode: 'cors',
       crossDomain: true,  
-      method:"GET"
+      method:"GET",
+      headers: {
+        "Authorization":"Bearer "+user.access_token
+      },
     })
     .then(res=>res.json())
     .then(res=>setSecuredDate(res));

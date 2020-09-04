@@ -5,7 +5,6 @@ import {
 } from './types'
 
 export function storeUser(user){
-    debugger;
     return{
         type:STORE_USER,
         payload:user

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
@@ -12,6 +13,7 @@ namespace WebApi.Controllers
     {
         [HttpGet]
         [Route("Hi")]
+  
         public object Hi()
         {
             return new { Hi = $"Hi unsecured {DateTime.Now}" };
@@ -19,6 +21,7 @@ namespace WebApi.Controllers
 
         [HttpGet]
         [Route("HiSecure")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public object HiSecure()
         {
             return new { Hi = $"Hi secured {DateTime.Now}" };

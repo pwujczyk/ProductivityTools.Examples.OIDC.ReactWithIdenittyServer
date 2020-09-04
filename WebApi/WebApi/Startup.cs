@@ -4,12 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace WebApi
 {
@@ -37,6 +35,17 @@ namespace WebApi
                     builder.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader();
                 });
             });
+
+            services.AddAuthentication("Bearer")
+               .AddJwtBearer("Bearer", options =>
+               {
+                   // identity server issuing token
+                   options.Authority = "https://localhost:5001";
+                   options.RequireHttpsMetadata = false;
+
+                   // the scope id of this api
+                   options.Audience = "api";
+               });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,12 +56,15 @@ namespace WebApi
                 app.UseDeveloperExceptionPage();
             }
             app.UseCors(MyAllowSpecificOrigins);
+            app.UseRouting();
+            app.UseAuthorization();
+            app.UseAuthentication();
             app.UseHttpsRedirection();
 
-            app.UseRouting();
-           
 
-            app.UseAuthorization();
+
+
+
 
             app.UseEndpoints(endpoints =>
             {
