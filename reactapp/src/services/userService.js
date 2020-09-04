@@ -19,6 +19,7 @@ export async function loadUserFromStorage(store){
         let user=await userManager.getUser();
         if (!user){return store.dispatch(storeUserError()) }
         store.dispatch(storeUser(user));
+        debugger;
     }
     catch(e){
         console.error(`User not found :${e}`)
