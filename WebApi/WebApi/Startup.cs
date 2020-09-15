@@ -62,10 +62,6 @@ namespace WebApi
             app.UseHttpsRedirection();
 
 
-
-
-
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
