@@ -9,7 +9,6 @@ export default function AuthProvider({ userManager: manager, store, children }) 
         userManager.current = manager
         const onUserLoaded = (user) => {
             console.log(`user loaded: ${user}`)
-            debugger;
             store.dispatch(storeUser(user))
         }
 

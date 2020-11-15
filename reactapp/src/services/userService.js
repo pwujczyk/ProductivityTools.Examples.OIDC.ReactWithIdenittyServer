@@ -8,7 +8,7 @@ const config={
     redirect_uri:"http://localhost:3000/signin-oidc",
     response_type:"id_token token",
     scope:"openid profile api",
-    post_logout_redirect_uri:"http:/localhost"
+    post_logout_redirect_uri: "http://localhost:3000/signout-oidc",
 }
 
 const userManager=new UserManager(config)
@@ -33,5 +33,17 @@ export function signinRedirect(){
 export function signInRedirectcCallback(){
     return userManager.signinRedirectCallback();
 }
+
+export function signOutRedirect(){
+    userManager.clearStaleState()
+  userManager.removeUser()
+  return userManager.signoutRedirectCallback()
+}
+
+export function signoutRedirectCallback() {
+    userManager.clearStaleState()
+    userManager.removeUser()
+    return userManager.signoutRedirectCallback()
+  }
 
 export default userManager
